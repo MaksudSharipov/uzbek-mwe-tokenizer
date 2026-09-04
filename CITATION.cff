@@ -1,0 +1,24 @@
+﻿cff-version: 1.2.0
+message: "If you use this software, please cite both the software and the underlying paper as below."
+authors:
+  - family-names: "Sharipov"
+    given-names: "Maksud S."
+    email: "maqsbek72@gmail.com"
+    affiliation: "Tashkent University of Information Technologies"
+title: "uzbek-mwe-tokenizer: A Transformer-based Python Framework for Multi-Word Expression Identification in Uzbek Texts"
+version: 0.1.0
+date-released: 2026-04-08
+url: "https://github.com/MaksudSharipov/uzbek-mwe-tokenizer"
+preferred-citation:
+  type: article
+  authors:
+    - family-names: "Sharipov"
+      given-names: "Maksud S."
+  journal: "Bulletin of TUIT: Management and Communication Technologies"
+  title: "Transformer-based intelligent model for identifying multi-word lexical units and reducing syntactic ambiguities in Uzbek language texts"
+  volume: 2
+  issue: 14
+  start: 103
+  end: 107
+  year: 2026
+  doi: "10.61663/262tuitmct14"
