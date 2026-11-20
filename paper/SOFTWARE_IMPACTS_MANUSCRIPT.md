@@ -134,7 +134,7 @@ In version `v0.1.0`, `uzbek-mwe-tokenizer` extracts contiguous MWEs (`B-MWE` imm
 ---
 
 ## CRediT authorship contribution statement
-**Maksud Sharipov:** Conceptualization, Methodology, Software, Model training, Writing – original draft, Supervision. **Abdusobir Saidov:** Methodology, Formal analysis, Validation, Writing – review & editing. **Azizbek Ruzmetov:** Software testing, Benchmarking, Documentation. **Shukurla Bekchanov:** Data curation, Validation, Visualization. **Ogabek Sobirov:** Software validation, Cross-script testing, Reproducibility verification. **Surayyo Sattarova:** Linguistic validation, Corpus curation, Writing – review & editing.
+**Maksud Sharipov:** Conceptualization, Methodology, Software, Investigation, Data curation, Formal analysis, Validation, Writing – original draft, Project administration, Supervision. **Abdusobir Saidov:** Formal analysis, Validation, Writing – review & editing. **Azizbek Ruzmetov:** Software, Validation, Resources. **Shukurla Bekchanov:** Data curation, Validation, Visualization. **Ogabek Sobirov:** Software, Investigation, Validation. **Surayyo Sattarova:** Data curation, Validation, Writing – review & editing.
 
 ---
 
