@@ -48,9 +48,9 @@ A second practical obstacle in Uzbek computational linguistics is the concurrent
 - **Subword-Aligned BIO Sequence Inference (`extract_mwe`):** Tokenizes pre-segmented words with `is_split_into_words=True`, computes contextual Softmax probabilities over `{0: O, 1: B-MWE, 2: I-MWE}`, and uses `inputs.word_ids()` to align first-subword predictions back to complete orthographic words.
 - **Contiguous Phrase Filtering and Script Restitution (`save_mwe`, `_format_output_text`):** Aggregates contiguous `B-MWE` and `I-MWE` tokens, retains valid multi-word spans ($\ge 2$ words), computes arithmetic mean confidence scores ($0$–$100\%$), and restores extracted spans to Latin script when `mode="lot"`.
 
-Figure 1 illustrates the end-to-end algorithmic control flow alongside a concrete subword-to-word alignment trace demonstrating how monographemic projection prevents Latin apostrophe splitting, while Algorithm 1 formalizes the exact extraction procedure.
+Figure 1 illustrates the end-to-end cross-script MWE identification workflow, while Algorithm 1 formalizes the exact extraction procedure.
 
-![Figure 1: (a) Cross-script MWE identification algorithm; (b) Subword-to-word alignment and orthographic restitution trace.](../docs/figure1_mwe_algorithm.png)
+![Fig. 1. Cross-script MWE identification workflow of UzbekMWETokenizer.](../docs/figure1_mwe_algorithm.png)
 
 *Algorithm 1: Cross-Script Subword-Aligned MWE Identification (`UzbekMWETokenizer`)*
 > **Input:** Raw Uzbek text $S$; script mode $m \in \{\texttt{"lot"}, \texttt{"cyr"}\}$; fine-tuned Transformer $\mathcal{M}_{\theta}$ (`UzBERT-Uncased`); WordPiece tokenizer $\mathcal{T}$; bidirectional transliterator $\Phi_{\text{lat}\leftrightarrow\text{cyr}}$.  
