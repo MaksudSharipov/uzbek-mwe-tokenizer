@@ -1,6 +1,7 @@
 ﻿# Uzbek MWE Tokenizer (`uzbek-mwe-tokenizer`)
 
 [![PyPI version](https://badge.fury.io/py/uzbek-mwe-tokenizer.svg)](https://pypi.org/project/uzbek-mwe-tokenizer/)
+[![Python Tests](https://github.com/MaksudSharipov/uzbek-mwe-tokenizer/actions/workflows/python-tests.yml/badge.svg)](https://github.com/MaksudSharipov/uzbek-mwe-tokenizer/actions/workflows/python-tests.yml)
 [![PyPI Downloads](https://static.pepy.tech/badge/uzbek-mwe-tokenizer)](https://pepy.tech/project/uzbek-mwe-tokenizer)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/MaksudSharipov/uzbek-mwe-tokenizer/blob/main/LICENSE)
 [![Python](https://img.shields.io/badge/python-%3E%3D3.6-blue.svg)](https://www.python.org/)
