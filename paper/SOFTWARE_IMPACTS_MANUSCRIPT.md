@@ -1,4 +1,4 @@
-# UzbekMWETokenizer: A Python library for Transformer-based multi-word expression identification in Uzbek
+﻿# UzbekMWETokenizer: A Python library for Transformer-based multi-word expression identification in Uzbek
 
 **Maksud Sharipov** $^{a,b,*}$  
 $^{a}$ *Department of Convergence of Digital Technologies, Tashkent University of Information Technologies named after Muhammad al-Khwarizmi, Urgench Branch, Urgench 220100, Uzbekistan*  
@@ -42,6 +42,33 @@ A second practical obstacle in Uzbek computational linguistics is the concurrent
 - **Apostrophe Normalization and Monographemic Projection (`_prepare_text`):** Standardizes heterogeneous Unicode apostrophes (`’`, `‘`, ````, `ʻ`) to ASCII (`'`) and, when initialized in Latin mode (`mode="lot"`), projects input text into monographemic Cyrillic (`o‘` $\rightarrow$ `ў`, `g‘` $\rightarrow$ `ғ`, `sh` $\rightarrow$ `ш`, `ch` $\rightarrow$ `ч`) via `UzTransliterator` [13].
 - **Subword-Aligned BIO Sequence Inference (`extract_mwe`):** Tokenizes pre-segmented words with `is_split_into_words=True`, computes contextual Softmax probabilities over `{0: O, 1: B-MWE, 2: I-MWE}`, and uses `inputs.word_ids()` to align first-subword predictions back to complete orthographic words.
 - **Contiguous Phrase Filtering and Script Restitution (`save_mwe`, `_format_output_text`):** Aggregates contiguous `B-MWE` and `I-MWE` tokens, retains valid multi-word spans ($\ge 2$ words), computes arithmetic mean confidence scores ($0$–$100\%$), and restores extracted spans to Latin script when `mode="lot"`.
+
+Figure 1 illustrates the end-to-end algorithmic control flow alongside a concrete subword-to-word alignment trace demonstrating how monographemic projection prevents Latin apostrophe splitting, while Algorithm 1 formalizes the exact extraction procedure.
+
+![Figure 1: (a) Cross-script MWE identification algorithm; (b) Subword-to-word alignment and orthographic restitution trace.](../docs/figure1_mwe_algorithm.png)
+
+*Algorithm 1: Cross-Script Subword-Aligned MWE Identification (`UzbekMWETokenizer`)*
+> **Input:** Raw Uzbek text $S$; script mode $m \in \{\texttt{"lot"}, \texttt{"cyr"}\}$; fine-tuned Transformer $\mathcal{M}_{\theta}$ (`UzBERT-Uncased`); WordPiece tokenizer $\mathcal{T}$; bidirectional transliterator $\Phi_{\text{lat}\leftrightarrow\text{cyr}}$.  
+> **Output:** Extracted MWE list $\mathcal{E} = \big[\{\texttt{"mwe"}: \mu_r,\; \texttt{"confidence"}: \bar{s}_r\}\big]_{r=1}^{R}$.  
+> 1. **if** $\text{trim}(S) = \varnothing$ **then return** $[\,]$  
+> 2. $S_{\text{norm}} \leftarrow \text{Replace}\big(S,\; \{\text{’}, \text{‘}, \text{`}, \text{ʻ}\} \mapsto \text{'}\big)$ $\quad\triangleright$ *Unicode apostrophe standardization*  
+> 3. $S_{\text{cyr}} \leftarrow \Phi_{\text{lat}\to\text{cyr}}(S_{\text{norm}})$ **if** $m = \texttt{"lot"}$ **else** $S_{\text{norm}}$ $\quad\triangleright$ *Monographemic Cyrillic projection*  
+> 4. $W = (w_0, w_1, \dots, w_{K-1}) \leftarrow \text{SplitWhitespace}(S_{\text{cyr}})$  
+> 5. $(X_{\text{sub}}, \pi) \leftarrow \mathcal{T}(W,\; \texttt{is\_split\_into\_words}=\texttt{True})$, where $\pi = (\pi_0, \dots, \pi_{L-1})$  
+> 6. $Z \leftarrow \mathcal{M}_{\theta}(X_{\text{sub}}) \in \mathbb{R}^{L \times 3}$; $\quad P_{t,c} \leftarrow \dfrac{\exp(Z_{t,c})}{\sum_{c'=0}^{2}\exp(Z_{t,c'})}$ for $t = 0, \dots, L-1$  
+> 7. Initialize $\mathcal{E} \leftarrow [\,]$, word buffer $B \leftarrow [\,]$, score buffer $C \leftarrow [\,]$, $\pi_{\text{prev}} \leftarrow \varnothing$  
+> 8. **Procedure** $\textsc{CommitSpan}(B, C)$:  
+> $\quad$ **if** $|B| \ge 2$ **then**  
+> $\qquad$ $\bar{s} \leftarrow \frac{1}{|B|} \sum_{s \in C} s$; $\quad \mu \leftarrow \Phi_{\text{cyr}\to\text{lat}}(\text{Join}(B))$ **if** $m = \texttt{"lot"}$ **else** $\text{Join}(B)$  
+> $\qquad$ Append $\{\texttt{"mwe"}: \mu,\; \texttt{"confidence"}: \bar{s}\}$ to $\mathcal{E}$  
+> 9. **for** $t = 0$ **to** $L - 1$ **do**  
+> $\quad$ **if** $\pi_t \neq \varnothing$ **and** $\pi_t \neq \pi_{\text{prev}}$ **then** $\quad\triangleright$ *Evaluate strictly at first subword of word $w_{\pi_t}$*  
+> $\qquad$ $\hat{y}_t \leftarrow \arg\max_{c \in \{0,1,2\}} Z_{t,c}$; $\quad s_t \leftarrow 100 \cdot P_{t,\hat{y}_t}$; $\quad u \leftarrow w_{\pi_t}$  
+> $\qquad$ **if** $\text{Label}(\hat{y}_t) = \texttt{"B-MWE"}$ **then** $\textsc{CommitSpan}(B, C)$; $B \leftarrow [u]$; $C \leftarrow [s_t]$  
+> $\qquad$ **else if** $\text{Label}(\hat{y}_t) = \texttt{"I-MWE"}$ **then** append $u$ to $B$; append $s_t$ to $C$  
+> $\qquad$ **else** ($\texttt{"O"}$): $\textsc{CommitSpan}(B, C)$; $B \leftarrow [\,]$; $C \leftarrow [\,]$  
+> $\quad$ $\pi_{\text{prev}} \leftarrow \pi_t$  
+> 10. $\textsc{CommitSpan}(B, C)$; **return** $\mathcal{E}$
 
 The package installs via `pip install uzbek-mwe-tokenizer` and provides a unified API for both scripts (Listing 1).
 
@@ -133,3 +160,4 @@ The author thanks the Computational Linguistics research teams at Urgench State 
 [12] M. Sharipov, `uzbek-mwe-tokenizer` v0.1.0 (GitHub, PyPI, and Hugging Face Hub: `MaksudSharipov/Uzbek-MWE-Tokenizer-uzBERT`), 2026. https://github.com/MaksudSharipov/uzbek-mwe-tokenizer.
 
 [13] U. Salaev, E. Kuriyozov, C. Gómez-Rodríguez, A machine transliteration tool between Uzbek alphabets, *CEUR Workshop Proceedings* 3246 (2022) 42–49.
+
