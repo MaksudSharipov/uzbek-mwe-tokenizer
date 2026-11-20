@@ -24,7 +24,7 @@ The library addresses key challenges of Uzbek NLP, including agglutinative word 
 - Smart apostrophe normalization (`’`, `‘`, ````, `ʻ` $\rightarrow$ `'`) and monographemic Cyrillic projection to prevent subword fragmentation.
 - Subword-to-word alignment via `word_ids()` and phrase-level Softmax confidence aggregation.
 - Clean Python API (`UzbekMWETokenizer` and `extract_mwe`) for integration into Uzbek NLP pipelines.
-- Public distribution through PyPI (1,411+ downloads) and Hugging Face Hub (138+ model downloads).
+- Public distribution through PyPI (1,411+ cumulative downloads; 207 in the last 30 days) and Hugging Face Hub (146+ all-time model downloads; 18 in the last 30 days).
 
 ## Installation
 
