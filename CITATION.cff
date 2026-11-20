@@ -1,14 +1,38 @@
 ﻿cff-version: 1.2.0
 message: "If you use this software, please cite both the software and the underlying paper as below."
+title: "UzbekMWETokenizer: A Python library for Transformer-based multi-word expression identification in Uzbek"
+version: 0.1.0
+date-released: 2026-05-20
+license: MIT
+repository-code: "https://github.com/MaksudSharipov/uzbek-mwe-tokenizer"
+url: "https://pypi.org/project/uzbek-mwe-tokenizer/"
 authors:
   - family-names: "Sharipov"
-    given-names: "Maksud S."
+    given-names: "Maksud"
     email: "maqsbek72@gmail.com"
+    orcid: "https://orcid.org/0000-0002-2363-6533"
+    affiliation: "Urgench State University & Tashkent University of Information Technologies"
+  - family-names: "Saidov"
+    given-names: "Abdusobir"
+    email: "abdusobir59@gmail.com"
     affiliation: "Tashkent University of Information Technologies"
-title: "uzbek-mwe-tokenizer: A Transformer-based Python Framework for Multi-Word Expression Identification in Uzbek Texts"
-version: 0.1.0
-date-released: 2026-04-08
-url: "https://github.com/MaksudSharipov/uzbek-mwe-tokenizer"
+  - family-names: "Ruzmetov"
+    given-names: "Azizbek"
+    email: "a.ruzmetov@kiut.uz"
+    affiliation: "Kimyo International University in Tashkent"
+  - family-names: "Bekchanov"
+    given-names: "Shukurla"
+    email: "bekchanov.sh@mamunedu.uz"
+    affiliation: "Mamun University"
+  - family-names: "Sobirov"
+    given-names: "Ogabek"
+    email: "o.sobirov@tsue.uz"
+    orcid: "https://orcid.org/0000-0003-1770-8550"
+    affiliation: "Tashkent State University of Economics"
+  - family-names: "Sattarova"
+    given-names: "Surayyo"
+    email: "surayyosattarova20@gmail.com"
+    affiliation: "RANCH University of Technology"
 preferred-citation:
   type: article
   authors:

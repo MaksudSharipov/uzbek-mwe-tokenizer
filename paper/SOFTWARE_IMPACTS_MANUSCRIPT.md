@@ -1,9 +1,14 @@
 ﻿# UzbekMWETokenizer: A Python library for Transformer-based multi-word expression identification in Uzbek
 
-**Maksud Sharipov** $^{a,b,*}$  
-$^{a}$ *Department of Convergence of Digital Technologies, Tashkent University of Information Technologies named after Muhammad al-Khwarizmi, Urgench Branch, Urgench 220100, Uzbekistan*  
-$^{b}$ *Department of Computer Science and Artificial Intelligence Technologies, Urgench State University named after Abu Rayhan Biruni, Urgench 220100, Uzbekistan*  
-$^{*}$ *Corresponding author. E-mail address:* `maqsbek72@gmail.com` | *ORCID:* [https://orcid.org/0000-0002-2363-6533](https://orcid.org/0000-0002-2363-6533)
+**Maksud Sharipov** $^{1,2,*}$, **Abdusobir Saidov** $^{2}$, **Azizbek Ruzmetov** $^{3}$, **Shukurla Bekchanov** $^{4}$, **Ogabek Sobirov** $^{5}$ **and Surayyo Sattarova** $^{6}$
+
+$^{1}$ *Department of Computer Science and Artificial Intelligence Technologies, Urgench State University named after Abu Rayhan Biruni, 14 Kh. Alimdjan Str., Urgench 220100, Uzbekistan;* `maqsbek72@gmail.com` *(ORCID: https://orcid.org/0000-0002-2363-6533)*  
+$^{2}$ *Department of Convergence of Digital Technologies, Tashkent University of Information Technologies named after Muhammad al-Khwarizmi, 108 Amir Temur Ave., Tashkent 100084, Uzbekistan;* `abdusobir59@gmail.com`  
+$^{3}$ *Department of Applied Informatics, Kimyo International University in Tashkent, 156 Shota Rustaveli Str., Tashkent 100121, Uzbekistan;* `a.ruzmetov@kiut.uz`  
+$^{4}$ *Department of Exact Sciences, Mamun University, 2 Bolkhovuz Str., Khiva 220900, Uzbekistan;* `bekchanov.sh@mamunedu.uz`  
+$^{5}$ *Department of Specialty, Social-Humanitarian and Exact Sciences, Tashkent State University of Economics, 49 Islam Karimov Str., Tashkent 100066, Uzbekistan;* `o.sobirov@tsue.uz` *(ORCID: https://orcid.org/0000-0003-1770-8550)*  
+$^{6}$ *Department of Digital Technologies, RANCH University of Technology, Urgench 220100, Uzbekistan;* `surayyosattarova20@gmail.com`  
+$^{*}$ *Correspondence:* `maqsbek72@gmail.com`
 
 ---
 
@@ -128,8 +133,18 @@ In version `v0.1.0`, `uzbek-mwe-tokenizer` extracts contiguous MWEs (`B-MWE` imm
 
 ---
 
+## CRediT authorship contribution statement
+**Maksud Sharipov:** Conceptualization, Methodology, Software, Model training, Writing – original draft, Supervision. **Abdusobir Saidov:** Methodology, Formal analysis, Validation, Writing – review & editing. **Azizbek Ruzmetov:** Software testing, Benchmarking, Documentation. **Shukurla Bekchanov:** Data curation, Validation, Visualization. **Ogabek Sobirov:** Software validation, Cross-script testing, Reproducibility verification. **Surayyo Sattarova:** Linguistic validation, Corpus curation, Writing – review & editing.
+
+---
+
+## Declaration of competing interest
+The authors declare that they have no known competing financial interests or personal relationships that could have appeared to influence the work reported in this paper.
+
+---
+
 ## Acknowledgements
-The author thanks the Computational Linguistics research teams at Urgench State University named after Abu Rayhan Biruni and Tashkent University of Information Technologies named after Muhammad al-Khwarizmi for corpus annotation support and computational resources.
+The authors thank the Computational Linguistics research teams at Urgench State University named after Abu Rayhan Biruni and Tashkent University of Information Technologies named after Muhammad al-Khwarizmi for computational resources and technical support.
 
 ---
 

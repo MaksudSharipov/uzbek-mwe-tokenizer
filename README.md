@@ -180,13 +180,18 @@ If you use this model or package in your research or project, please cite:
 }
 ```
 
-## Author
+## Authors & Contributors
 
-**Maksud Sharipov**
+- **Maksud Sharipov** (Corresponding Author — Urgench State University & TUIT; [ORCID](https://orcid.org/0000-0002-2363-6533))
+- **Abdusobir Saidov** (Tashkent University of Information Technologies)
+- **Azizbek Ruzmetov** (Kimyo International University in Tashkent)
+- **Shukurla Bekchanov** (Mamun University)
+- **Ogabek Sobirov** (Tashkent State University of Economics; [ORCID](https://orcid.org/0000-0003-1770-8550))
+- **Surayyo Sattarova** (RANCH University of Technology)
 
-- ORCID: https://orcid.org/0000-0002-2363-6533
-- GitHub: https://github.com/MaksudSharipov
-- Hugging Face: https://huggingface.co/MaksudSharipov
+Links:
+- GitHub: https://github.com/MaksudSharipov/uzbek-mwe-tokenizer
+- Hugging Face: https://huggingface.co/MaksudSharipov/Uzbek-MWE-Tokenizer-uzBERT
 - PyPI: https://pypi.org/project/uzbek-mwe-tokenizer/
 
 ## License
