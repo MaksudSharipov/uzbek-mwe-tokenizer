@@ -1,12 +1,12 @@
-## UzbekMWETokenizer (`uzbek-mwe-tokenizer`) v0.1.0
+## uzbek-mwe-tokenizer v0.1.0
 
-This release provides the *Software Impacts* / *SoftwareX*-ready version of **UzbekMWETokenizer** (`uzbek-mwe-tokenizer`), an open-source Python library for Transformer-based Multi-Word Expression (MWE) identification and BIO sequence tagging in Uzbek texts.
+This release corresponds to the published PyPI version (`v0.1.0`) of **`uzbek-mwe-tokenizer`**, an open-source Python library for Transformer-based Multi-Word Expression (MWE) identification in Uzbek texts.
 
 ### Highlights
 
-- Transformer-based MWE extraction and word-level BIO tagging (`B-MWE`, `I-MWE`, `O`) for Uzbek texts.
-- Fine-tuned 108.5M-parameter `UzBERT-Uncased` model integration (`MaksudSharipov/Uzbek-MWE-Tokenizer-uzBERT`).
-- Python API and command-line interface (`uzbek-mwe`).
+- Transformer-based MWE extraction (`B-MWE`, `I-MWE`, `O`) for Uzbek texts.
+- Fine-tuned 108.5M-parameter `UzBERT` model integration (`MaksudSharipov/Uzbek-MWE-Tokenizer-uzBERT`).
+- Python API (`UzbekMWETokenizer` with `extract_mwe`).
 - Native cross-script support for both Latin (`mode="lot"`) and Cyrillic (`mode="cyr"`) Uzbek alphabets.
 - Automated Uzbek apostrophe normalization and monographemic Cyrillic projection to eliminate subword fragmentation.
 - Subword-to-word alignment via `word_ids()` and phrase-level Softmax confidence aggregation.
@@ -15,26 +15,12 @@ This release provides the *Software Impacts* / *SoftwareX*-ready version of **Uz
 
 ### Repository structure
 
-- `uzbek_mwe_tokenizer/` — core source code (`tokenizer.py`, `text_utils.py`, `label_map.py`, `cli.py`)
-- `examples/` — runnable usage examples (`basic_usage.py`, `batch_extraction.py`, `export_conll.py`, `cli_usage.py`)
-- `tests/` — unit and integration tests
-- `benchmark/` — evaluation and inference-speed benchmark scripts
+- `uzbek_mwe_tokenizer/` — exact PyPI `v0.1.0` package source code (`__init__.py`, `tokenizer.py`)
+- `examples/` — runnable usage examples (`basic_usage.py`, `batch_extraction.py`)
+- `tests/` — unit and integration tests (`test_import.py`, `test_model_integration_optional.py`)
+- `benchmark/` — evaluation and inference-speed benchmark scripts (`evaluate.py`, `speed_test.py`, `results.csv`)
 - `docs/` — installation, usage, and BIO tagset documentation
 - `paper/` — companion Original Software Publication manuscript
-
-### Validation
-
-The package was validated with:
-
-- Unit tests passing (`pytest tests -v`) for package imports, BIO label mappings, apostrophe normalization, and output formatters (`mwe`, `slash`, `conll`, `json`)
-- Optional Hugging Face model integration test (`RUN_MODEL_TESTS=1 pytest tests/test_model_integration_optional.py`)
-- Python API and CLI tests for Latin and Cyrillic inputs
-- Inference-speed benchmark (`benchmark/speed_test.py`)
-
-### Reported MWE identification performance
-
-Evaluated on an isomorphic Uzbek MWE corpus (11,936 sentences, 108,200 tokens, 14,285 MWE instances):
-- `UzBERT-Uncased` (integrated Cyrillic backbone): Accuracy = `0.9559`, Precision = `0.8528`, Recall = `0.8926`, F1-Score = `0.8722` (recovering `1,342` `B-MWE` and `1,467` `I-MWE` tokens with zero apostrophe subword fragmentation).
 
 ### Installation
 

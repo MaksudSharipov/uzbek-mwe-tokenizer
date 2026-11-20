@@ -1,4 +1,4 @@
-"""Batch MWE extraction example for UzbekMWETokenizer.
+"""Multiple-sentence MWE extraction example for UzbekMWETokenizer.
 
 Run:
     python examples/batch_extraction.py
@@ -16,9 +16,9 @@ def main() -> None:
         "Рақибларимизни кўриб бизнинг асло тепа сочимиз тик бўлмади.",
     ]
 
-    batch_results = tokenizer.extract_batch(sentences)
-    for sent, mwes in zip(sentences, batch_results):
-        print("Gap:", sent)
+    for gap in sentences:
+        print("Gap:", gap)
+        mwes = tokenizer.extract_mwe(gap)
         print("Topilgan MWE'lar:", mwes)
         print("-" * 50)
 

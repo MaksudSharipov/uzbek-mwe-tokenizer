@@ -1,4 +1,4 @@
-"""CoNLL BIO evaluation script for UzbekMWETokenizer.
+"""CoNLL BIO evaluation script for UzbekMWETokenizer (PyPI v0.1.0 API).
 
 Run:
     python benchmark/evaluate.py --test-file path/to/test.conll --output benchmark/eval_summary.csv
@@ -11,6 +11,7 @@ import csv
 from pathlib import Path
 from typing import List, Tuple
 
+import torch
 from uzbek_mwe_tokenizer import UzbekMWETokenizer
 
 
@@ -36,6 +37,28 @@ def load_conll(path: Path) -> List[Tuple[List[str], List[str]]]:
     return sentences
 
 
+def predict_word_tags(tokenizer: UzbekMWETokenizer, words: List[str]) -> List[str]:
+    text = tokenizer._prepare_text(" ".join(words))
+    prep_words = text.split()
+    inputs = tokenizer.tokenizer(prep_words, is_split_into_words=True, return_tensors="pt")
+    word_ids = inputs.word_ids()
+
+    with torch.no_grad():
+        outputs = tokenizer.model(**inputs)
+
+    predictions = torch.argmax(outputs.logits, dim=2)[0].tolist()
+    pred_tags: List[str] = []
+    prev_word_idx = None
+
+    for idx, word_idx in enumerate(word_ids):
+        if word_idx is None:
+            continue
+        if word_idx != prev_word_idx:
+            pred_tags.append(tokenizer.id2label[predictions[idx]])
+        prev_word_idx = word_idx
+    return pred_tags
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description="Evaluate UzbekMWETokenizer on BIO CoNLL data.")
     parser.add_argument("--test-file", type=Path, required=True, help="Path to BIO CoNLL test file.")
@@ -44,15 +67,13 @@ def main() -> None:
     args = parser.parse_args()
 
     dataset = load_conll(args.test_file)
-    tokenizer = UzbekMWETokenizer(mode=args.mode, quiet=True)
+    tokenizer = UzbekMWETokenizer(mode=args.mode)
 
     y_true: List[str] = []
     y_pred: List[str] = []
 
     for words, gold_tags in dataset:
-        sent_text = " ".join(words)
-        pred_items = tokenizer.tag_tokens(sent_text)
-        pred_tags = [str(item["tag"]) for item in pred_items]
+        pred_tags = predict_word_tags(tokenizer, words)
         min_len = min(len(gold_tags), len(pred_tags))
         y_true.extend(gold_tags[:min_len])
         y_pred.extend(pred_tags[:min_len])

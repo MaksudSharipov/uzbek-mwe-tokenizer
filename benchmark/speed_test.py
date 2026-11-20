@@ -1,9 +1,7 @@
-"""Inference-speed benchmark for UzbekMWETokenizer.
+"""Inference-speed benchmark for UzbekMWETokenizer (PyPI v0.1.0 API).
 
 Run:
     python benchmark/speed_test.py
-
-The script reports approximate runtime, sentences/second, and tokens/second on the current machine.
 """
 
 from __future__ import annotations
@@ -21,10 +19,10 @@ SENTENCES = [
 
 
 def main() -> None:
-    tokenizer = UzbekMWETokenizer(mode="lot", quiet=True)
+    tokenizer = UzbekMWETokenizer(mode="lot")
 
     start = time.perf_counter()
-    results = tokenizer.extract_batch(SENTENCES)
+    results = [tokenizer.extract_mwe(sentence) for sentence in SENTENCES]
     elapsed = time.perf_counter() - start
 
     token_count = sum(len(s.split()) for s in SENTENCES)

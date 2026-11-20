@@ -1,12 +1,15 @@
 # Usage
 
-This document explains how to use **UzbekMWETokenizer** (`uzbek-mwe-tokenizer`) for multi-word expression (MWE) extraction and BIO sequence tagging in Uzbek texts.
+This document explains how to use **`uzbek-mwe-tokenizer`** (`UzbekMWETokenizer`) for Multi-Word Expression (MWE) identification in Uzbek texts.
 
-## Basic Python API (Latin Script)
+## 1. Latin Script Mode (`mode="lot"`)
+
+In Latin mode, the package normalizes apostrophes, transliterates input text to Cyrillic for neural inference, and translates extracted MWEs back to Latin script:
 
 ```python
 from uzbek_mwe_tokenizer import UzbekMWETokenizer
 
+# Initialize tokenizer in Latin mode
 tokenizer = UzbekMWETokenizer(mode="lot")
 
 text = "Natijani ko'rib, hamma o'quvchilarning birdaniga tarvuzi qo'ltig'idan tushdi."
@@ -21,51 +24,37 @@ Expected output:
 [{'mwe': "tarvuzi qo'ltig'idan tushdi", 'confidence': 100.0}]
 ```
 
-## Cyrillic Script Mode (`mode="cyr"`)
+## 2. Cyrillic Script Mode (`mode="cyr"`)
 
 ```python
 from uzbek_mwe_tokenizer import UzbekMWETokenizer
 
+# Initialize tokenizer in Cyrillic mode
 tokenizer = UzbekMWETokenizer(mode="cyr")
 
-sentence = "Қоронғи хонада унинг қаттиқ капалаги учди, гўё ерга кирса, қулоғидан тортиб чиқарадиган ҳолат эди."
-print(tokenizer.extract_mwe(sentence))
+sentences = [
+    "Натижани кўриб, ҳамма ўқувчиларнинг бирданига тарвузи қўлтиғидан тушди.",
+    "Қоронғи хонада унинг қаттиқ капалаги учди, гўё ерга кирса, қулоғидан тортиб чиқарадиган ҳолат эди.",
+    "Рақибларимизни кўриб бизнинг асло тепа сочимиз тик бўлмади."
+]
+
+for gap in sentences:
+    print("Gap:", gap)
+    mwes = tokenizer.extract_mwe(gap)
+    print("Topilgan MWE'lar:", mwes)
+    print("-" * 50)
 ```
 
 Expected output:
 
-```python
-[
-    {'mwe': 'капалаги учди', 'confidence': 100.0},
-    {'mwe': 'ерга кирса', 'confidence': 76.0},
-    {'mwe': 'қулоғидан тортиб чиқарадиган', 'confidence': 99.0}
-]
-```
-
-## Output Formats (`mwe`, `slash`, `conll`, `json`)
-
-```python
-from uzbek_mwe_tokenizer import UzbekMWETokenizer
-
-tokenizer = UzbekMWETokenizer(mode="lot", quiet=True)
-text = "Natijani ko'rib, tarvuzi qo'ltig'idan tushdi."
-
-# 1. Extracted MWE list
-print(tokenizer(text, output_format="mwe"))
-
-# 2. Slash format
-print(tokenizer(text, output_format="slash"))
-# Natijani/O ko'rib,/O tarvuzi/B-MWE qo'ltig'idan/I-MWE tushdi./I-MWE
-
-# 3. CoNLL two-column BIO format
-print(tokenizer(text, output_format="conll"))
-```
-
-## Command-Line Interface (`uzbek-mwe`)
-
-```bash
-uzbek-mwe "Natijani ko'rib, hamma o'quvchilarning birdaniga tarvuzi qo'ltig'idan tushdi."
-uzbek-mwe "Қоронғи хонада унинг қаттиқ капалаги учди." --mode cyr
-uzbek-mwe "Natijani ko'rib, tarvuzi qo'ltig'idan tushdi." --format slash
-uzbek-mwe "Natijani ko'rib, tarvuzi qo'ltig'idan tushdi." --format conll
+```text
+Gap: Натижани кўриб, ҳамма ўқувчиларнинг бирданига тарвузи қўлтиғидан тушди.
+Topilgan MWE'lar: [{'mwe': 'тарвузи қўлтиғидан тушди', 'confidence': 100.0}]
+--------------------------------------------------
+Gap: Қоронғи хонада унинг қаттиқ капалаги учди, гўё ерга кирса, қулоғидан тортиб чиқарадиган ҳолат эди.
+Topilgan MWE'lar: [{'mwe': 'капалаги учди', 'confidence': 100.0}, {'mwe': 'ерга кирса', 'confidence': 76.0}, {'mwe': 'қулоғидан тортиб чиқарадиган', 'confidence': 99.0}]
+--------------------------------------------------
+Gap: Рақибларимизни кўриб бизнинг асло тепа сочимиз тик бўлмади.
+Topilgan MWE'lar: [{'mwe': 'тепа сочимиз тик бўлмади', 'confidence': 100.0}]
+--------------------------------------------------
 ```

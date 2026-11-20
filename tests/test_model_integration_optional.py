@@ -10,7 +10,7 @@ from uzbek_mwe_tokenizer import UzbekMWETokenizer
     reason="Set RUN_MODEL_TESTS=1 to run full Hugging Face model integration test.",
 )
 def test_extract_mwe_latin_integration():
-    tokenizer = UzbekMWETokenizer(mode="lot", quiet=True)
+    tokenizer = UzbekMWETokenizer(mode="lot")
     text = "Natijani ko'rib, hamma o'quvchilarning birdaniga tarvuzi qo'ltig'idan tushdi."
     mwes = tokenizer.extract_mwe(text)
     assert len(mwes) >= 1
