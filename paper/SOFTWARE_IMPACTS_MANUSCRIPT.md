@@ -1,128 +1,106 @@
-# uzbek-mwe-tokenizer: A Transformer-based Python Framework for Multi-Word Expression Identification and Syntactic Disambiguation in Uzbek Texts
+# UzbekMWETokenizer: A Python library for Transformer-based multi-word expression identification in Uzbek
 
-**Maksud S. Sharipov**  
-*Department of Convergence of Digital Technologies, Tashkent University of Information Technologies named after Muhammad al-Khwarizmi, Urgench, Uzbekistan*  
-*Email:* `maqsbek72@gmail.com`  
+**Maksud Sharipov** $^{a,b,*}$  
+$^{a}$ *Tashkent University of Information Technologies named after Muhammad al-Khwarizmi, Uzbekistan*  
+$^{b}$ *Urgench State University named after Abu Rayhan Biruni, Urgench, Uzbekistan*  
+*ORCID:* [https://orcid.org/0000-0002-2363-6533](https://orcid.org/0000-0002-2363-6533)  
+$^{*}$ *Corresponding author. E-mail address:* `maqsbek72@gmail.com`
+
+---
+
+## Highlights
+- Open-source Python library identifies multi-word expressions in Uzbek text.
+- Cross-script normalization resolves Latin apostrophe subword fragmentation.
+- Subword-to-word alignment maps UzBERT BIO logits to full lexical spans.
+- Evaluated on 11,936 sentences achieving 0.9559 accuracy and 0.8722 F1-score.
+- PyPI, CLI, unit tests, CI, and benchmarks support reproducible reuse.
 
 ---
 
 ## Abstract
-In agglutinative languages such as Uzbek, multi-word expressions (MWEs)—encompassing auxiliary verb constructions, compound nouns, and idiomatic phrases—create severe syntactic ambiguities for conventional word-by-word natural language processing (NLP) pipelines. Furthermore, orthographic irregularities in the Latin script (specifically, apostrophe modifiers in digraphs such as *o‘* and *g‘*) frequently cause subword tokenization fragmentation in standard WordPiece and Byte-Pair Encoding (BPE) tokenizers. This paper presents `uzbek-mwe-tokenizer`, an open-source Python framework powered by a fine-tuned 108.5M-parameter UzBERT transformer backbone (`MaksudSharipov/Uzbek-MWE-Tokenizer-uzBERT`) that automates MWE identification using a BIO sequence-labeling scheme. The software incorporates an automated bidirectional transliteration bridge that projects Latin inputs into a monographemic Cyrillic representation during neural inference, completely eliminating apostrophe-induced token splitting while transparently restoring extracted expressions to the user's native script. Distributed via PyPI and the Hugging Face Hub—with over 1,411 package downloads and 138 model weight downloads since release—`uzbek-mwe-tokenizer` offers a reproducible, production-ready preprocessing module for downstream syntactic dependency parsing, machine translation, and information retrieval systems.
+UzbekMWETokenizer (distributed on PyPI as `uzbek-mwe-tokenizer`) is an open-source Python library for identifying and extracting multi-word expressions (MWEs) in Uzbek text using a fine-tuned UzBERT model. The package normalizes common apostrophe variants, applies bidirectional Latin–Cyrillic script projection to eliminate subword fragmentation, aligns Transformer subword predictions with original orthographic words, aggregates BIO (`B-MWE`, `I-MWE`, `O`) sequence probabilities, and filters contiguous multi-token phrases. It provides Python and command-line interfaces supporting phrase dictionary, slash, JSON, and CoNLL-like BIO outputs. Evaluated on an isomorphic Uzbek MWE corpus (11,936 sentences, 108,200 tokens, and 14,285 MWEs), the integrated model achieved 0.9559 accuracy, 0.8926 recall, and 0.8722 F1-score without boundary truncation. The release includes documentation, unit tests, CI workflows, benchmarks, and PyPI distribution, recording over 1,411 PyPI downloads and 138 Hugging Face model downloads.
 
-**Keywords:** Multi-Word Expressions (MWE); Uzbek NLP; Tokenization; UzBERT; Transformer; Syntactic Disambiguation; Cross-Script Normalization.
+**Keywords:** Multi-word expressions; Uzbek NLP; Tokenization; Transformer; UzBERT; Sequence labeling.
 
 ---
 
-## Metadata
+## Code Metadata
 
-*Table 1: Code and Software Metadata (compliant with Elsevier SoftwareX and Software Impacts OSP guidelines).*
-
-| Nr. | Metadata description | Details |
+| Nr. | Code metadata description | Metadata |
 | :--- | :--- | :--- |
 | **C1** | **Current code version** | `v0.1.0` |
-| **C2** | **Permanent link to code/repository** | [https://github.com/MaksudSharipov/uzbek-mwe-tokenizer](https://github.com/MaksudSharipov/uzbek-mwe-tokenizer) |
-| **C3** | **Package distribution archive (PyPI)** | [https://pypi.org/project/uzbek-mwe-tokenizer/](https://pypi.org/project/uzbek-mwe-tokenizer/) |
+| **C2** | **Permanent link to code/repository used for this code version** | [https://github.com/MaksudSharipov/uzbek-mwe-tokenizer](https://github.com/MaksudSharipov/uzbek-mwe-tokenizer) |
+| **C3** | **Permanent link to Reproducible Capsule / Package Archive** | [https://pypi.org/project/uzbek-mwe-tokenizer/](https://pypi.org/project/uzbek-mwe-tokenizer/) |
 | **C4** | **Pre-trained model hub repository** | [https://huggingface.co/MaksudSharipov/Uzbek-MWE-Tokenizer-uzBERT](https://huggingface.co/MaksudSharipov/Uzbek-MWE-Tokenizer-uzBERT) |
-| **C5** | **Legal Code License** | MIT License (OSI-approved) |
+| **C5** | **Legal Code License** | MIT License |
 | **C6** | **Code versioning system used** | Git |
-| **C7** | **Software code languages, tools, and services** | Python $\ge$ 3.8, PyTorch, Hugging Face Transformers, SentencePiece, UzTransliterator |
-| **C8** | **Compilation requirements & operating environments** | OS-independent (Linux, Windows, macOS); CPU or CUDA-enabled GPU |
-| **C9** | **Link to developer documentation / manual** | [https://pypi.org/project/uzbek-mwe-tokenizer/](https://pypi.org/project/uzbek-mwe-tokenizer/) |
+| **C7** | **Software code languages, tools, and services used** | Python ($\ge 3.8$), PyTorch, Hugging Face Transformers, SentencePiece, UzTransliterator |
+| **C8** | **Compilation requirements, operating environments & dependencies** | OS-independent (Linux, macOS, Windows); dependencies: `torch>=1.9.0`, `transformers>=4.20.0`, `UzTransliterator>=0.0.18`, `sentencepiece>=0.1.96` |
+| **C9** | **If available, link to developer documentation/manual** | [https://github.com/MaksudSharipov/uzbek-mwe-tokenizer/tree/main/docs](https://github.com/MaksudSharipov/uzbek-mwe-tokenizer/tree/main/docs) |
 | **C10** | **Support email for questions** | `maqsbek72@gmail.com` |
 
 ---
 
-## 1. Motivation and Significance
+## 1. Motivation and Background
 
-In computational linguistics, the quality of syntactic and semantic parsing directly depends on the granularity of initial tokenization. In strongly agglutinative languages with rich derivational and inflectional morphology, such as Uzbek, Multi-Word Expressions (MWEs) play a central role in expressing complex predicates and figurative meanings [1, 2]. Although MWEs consist of two or more space-separated orthographic words, they function semantically and syntactically as a single indivisible lexeme—for instance, auxiliary verb constructions (*sotib olmoq* [to purchase]), compound predicates (*qaror qilmoq* [to decide]), and idioms (*tarvuzi qo‘ltig‘idan tushdi* [to become deeply discouraged]). When traditional word-by-word tokenizers and dependency parsers analyze MWE components as independent tokens, the resulting dependency tree suffers from structural attachment errors, and downstream machine translation engines produce literal, semantically distorted outputs [3, 4].
+Uzbek is a strongly agglutinative Turkic language in which grammatical relations and derivational nuances are expressed through complex suffixation chains attached to word stems [1, 2]. Alongside morphological complexity, Uzbek texts abound in multi-word expressions (MWEs)—including auxiliary verb constructions (*sotib olmoq* [to buy]), compound predicates (*qaror qilmoq* [to decide]), and idiomatic phrases (*tarvuzi qo‘ltig‘idan tushdi* [to lose hope])—which consist of multiple space-separated words but function semantically and syntactically as a single lexical unit [3]. When conventional tokenizers and word-level NLP pipelines process these units as isolated tokens, downstream dependency parsers construct erroneous syntactic trees and machine translation engines generate literal, distorted translations.
 
-In Uzbek NLP, this challenge is compounded by a dual-orthography ecosystem where both Latin and Cyrillic scripts are actively used. Within the official Uzbek Latin alphabet, letters such as *o‘*, *g‘*, and the glottal stop (*’*) rely on apostrophe-like modifier symbols (`’`, `‘`, `'`, `ʻ`). Standard subword tokenization algorithms (WordPiece and BPE) deployed in pre-trained multilingual and monolingual transformers treat these apostrophes as punctuation delimiters rather than integral character components [1]. Consequently, a single grammatical word such as *qo‘ltig‘idan* is artificially fractured into disconnected fragments (`qo` + `'` + `ltig` + `'` + `idan`), disrupting the continuity of `I-MWE` (Inside) sequence tags and degrading boundary recall.
+A major practical barrier to Transformer-based MWE identification in Uzbek is its dual-script orthography (Latin and Cyrillic) and the heterogeneous representation of apostrophes in Latin texts (`’`, `‘`, `'`, `ʻ`, ````). Standard subword tokenizers (WordPiece and BPE) used in pre-trained language models [4, 5] treat Latin apostrophes in digraphs such as *o‘* and *g‘* as punctuation delimiters. This splits a single inflected word (e.g., *qo‘ltig‘idan*) into disconnected subwords (`qo` + `'` + `ltig` + `'` + `idan`), breaking the continuity of `I-MWE` (Inside) sequence tags.
 
-To overcome these algorithmic and orthographic bottlenecks, we developed `uzbek-mwe-tokenizer`. The software encapsulates our fine-tuned `UzBERT-Uncased` token classification model [1] within an end-to-end Python library that harmonizes cross-script normalization, word-to-subword index alignment, and automated script restitution.
+Building upon our recent open-source Uzbek NLP ecosystem—specifically `UzbekTaggerBERT` for contextual part-of-speech tagging [2] and our cross-script MWE study [3]—we present **UzbekMWETokenizer** (`uzbek-mwe-tokenizer`). The library encapsulates a fine-tuned 108.5M-parameter `UzBERT-Uncased` token classification model (`MaksudSharipov/Uzbek-MWE-Tokenizer-uzBERT`) [6] within a modular Python package and command-line tool that automates apostrophe normalization, monographemic cross-script inference, subword-to-word alignment, and multi-format MWE export.
 
 ---
 
-## 2. Software Description
+## 2. Software Description and Architecture
 
-### 2.1. Software Architecture
-The `uzbek-mwe-tokenizer` package is designed as a lightweight, object-oriented Python framework centered around the `UzbekMWETokenizer` class. As illustrated in Figure 1, the internal pipeline operates across three decoupled stages:
+### 2.1. Package Structure and Workflow
+`UzbekMWETokenizer` is structured as a modular, reproducible Python package matching modern research software engineering standards:
 
-```
-[ Raw Input Text (Latin `mode="lot"` or Cyrillic `mode="cyr"`) ]
-                                │
-                                ▼
-┌───────────────────────────────────────────────────────────────────┐
-│ Stage 1: Orthographic Normalization & Cross-Script Bridge         │
-│  • Standardizes typographic apostrophes (`’`, `‘`, ````, `ʻ` -> `'`)│
-│  • Transliterates Latin text to monographemic Cyrillic (`ў`, `ғ`) │
-│  • Splits whitespace tokens while preserving word indices         │
-└───────────────────────────────────────────────────────────────────┘
-                                │
-                                ▼
-┌───────────────────────────────────────────────────────────────────┐
-│ Stage 2: Neural Sequence Labeling (`UzBERT-Uncased` Backbone)     │
-│  • 12-layer Transformer (`hidden_size=768`, 108,493,059 params)   │
-│  • Subword tokenization with `is_split_into_words=True`           │
-│  • Subword-to-word alignment via `inputs.word_ids()`              │
-│  • Contextual logits & Softmax probability over {O, B-MWE, I-MWE} │
-└───────────────────────────────────────────────────────────────────┘
-                                │
-                                ▼
-┌───────────────────────────────────────────────────────────────────┐
-│ Stage 3: Phrase Aggregation & Bidirectional Script Restitution    │
-│  • Reconstructs whole orthographic words from subword predictions │
-│  • Enforces multi-word length constraint (word count >= 2)        │
-│  • Computes arithmetic mean confidence across constituent words   │
-│  • Restores extracted MWEs back to native Latin or Cyrillic script│
-└───────────────────────────────────────────────────────────────────┘
-                                │
-                                ▼
-[ Structured Output: List[Dict{"mwe": str, "confidence": float}] ]
-```
-*Figure 1: Architectural dataflow of the `uzbek-mwe-tokenizer` framework.*
+- `uzbek_mwe_tokenizer/tokenizer.py` — core `UzbekMWETokenizer` class implementing model loading, cross-script projection, subword-aligned BIO inference, and output formatting (`mwe`, `slash`, `conll`, `json`).
+- `uzbek_mwe_tokenizer/text_utils.py` — apostrophe normalization (`normalize_apostrophes`) and orthographic word splitting (`split_words`).
+- `uzbek_mwe_tokenizer/label_map.py` — BIO tag definitions (`O`, `B-MWE`, `I-MWE`) and bijective ID mappings.
+- `uzbek_mwe_tokenizer/cli.py` — command-line interface (`uzbek-mwe`) supporting script selection and multiple output formats.
+- `examples/`, `tests/`, `benchmark/`, and `docs/` — runnable examples, `pytest` unit/integration tests, CoNLL evaluation and speed-test scripts, and user documentation.
 
-### 2.2. Software Functionalities and Core Implementation
-The core logic resides in `uzbek_mwe_tokenizer/tokenizer.py` and exposes a clean, modular API:
+The end-to-end processing pipeline executes in five deterministic steps:
 
-1. **Automated Model Provisioning (`__init__`):** Initializes the operating script mode (`lot` or `cyr`), instantiates the rule-based `UzTransliterator` engine [6], and automatically downloads and caches the pre-trained neural weights (`MaksudSharipov/Uzbek-MWE-Tokenizer-uzBERT`) via Hugging Face's `AutoTokenizer` and `AutoModelForTokenClassification`.
-2. **Orthographic Sanitization (`_prepare_text`):** Unifies disparate Unicode apostrophe variants (`U+2019`, `U+2018`, `U+02BB`, `U+0060`) into a canonical form and maps Latin sequences into monographemic Cyrillic representations (`o‘` $\rightarrow$ `ў`, `g‘` $\rightarrow$ `ғ`, `sh` $\rightarrow$ `ш`, `ch` $\rightarrow$ `ч`). This guarantees that the WordPiece tokenizer never encounters mid-word punctuation splits.
-3. **Subword-Aligned BIO Inference (`extract_mwe`):** Rather than assigning tags to fragmented subwords, the method aligns first-subword logits back to full orthographic words using `word_ids()`, aggregates contiguous `B-MWE` and `I-MWE` spans of length $\ge 2$, and calculates phrase-level confidence:
+1. **Text Normalization (`text_utils.py`):** Standardizes all Unicode apostrophe variants (`‘`, `’`, ````, `´`, `ʼ`, `ʻ`) into a canonical form (`'`) and normalizes whitespace.
+2. **Cross-Script Monographemic Projection (`_prepare_text`):** When operating in Latin mode (`mode="lot"`), input text is transliterated into monographemic Cyrillic (`o‘` $\rightarrow$ `ў`, `g‘` $\rightarrow$ `ғ`, `sh` $\rightarrow$ `ш`, `ch` $\rightarrow$ `ч`) via `UzTransliterator` [7], preventing subword tokenizers from splitting words at apostrophes.
+3. **Subword Tokenization and Index Alignment:** Pre-split orthographic words are passed to the fine-tuned `UzBERT-Uncased` tokenizer with `is_split_into_words=True`, and `inputs.word_ids()` maps each subword token back to its parent word index.
+4. **Contextual BIO Prediction and Confidence Aggregation:** The 12-layer Transformer (`108,493,059` parameters) predicts logits over `{0: O, 1: B-MWE, 2: I-MWE}`. Softmax probabilities are extracted at word boundaries, and contiguous `B-MWE` + `I-MWE` spans of length $\ge 2$ words are assembled with their arithmetic mean confidence score.
+5. **Bidirectional Script Restitution (`_format_output_text`):** Extracted MWE spans and word-level BIO sequences are transparently restored to the user's native script (`lot` or `cyr`).
 
-$$\text{Confidence}(\text{MWE}) = \frac{1}{N} \sum_{i=1}^{N} \left( \max_{c \in \{0,1,2\}} \frac{\exp(z_{i,c})}{\sum_{k} \exp(z_{i,k})} \right) \times 100\%$$
-
-where $N \ge 2$ is the number of constituent words in the candidate MWE and $z_{i,c}$ denotes the output logit of word $i$ for BIO class $c$.
-
-Below is the core extraction implementation from `uzbek_mwe_tokenizer/tokenizer.py`:
+### 2.2. Core Implementation
+Listing 1 shows the core word-aligned BIO extraction and formatting methods in `uzbek_mwe_tokenizer/tokenizer.py`.
 
 ```python
-def extract_mwe(self, raw_text):
+# Listing 1: Subword-aligned MWE extraction and multi-format callable interface
+def extract_mwe(self, raw_text: str) -> List[Dict[str, Union[str, float]]]:
     if not raw_text.strip():
         return []
 
     text = self._prepare_text(raw_text)
     words = text.split()
-    
+
     inputs = self.tokenizer(words, is_split_into_words=True, return_tensors="pt")
     word_ids = inputs.word_ids()
+    encoded = {k: v.to(self.device) for k, v in inputs.items()}
 
     with torch.no_grad():
-        outputs = self.model(**inputs)
+        outputs = self.model(**encoded)
 
-    logits = outputs.logits
+    logits = outputs.logits.detach().cpu()
     predictions = torch.argmax(logits, dim=2)[0].tolist()
     probabilities = torch.nn.functional.softmax(logits, dim=2)[0]
 
     extracted_mwes, current_mwe_words, current_mwe_scores = [], [], []
     previous_word_idx = None
 
-    def save_mwe():
+    def save_mwe() -> None:
         if len(current_mwe_words) >= 2:
             avg_score = sum(current_mwe_scores) / len(current_mwe_scores)
             mwe_str_formatted = self._format_output_text(" ".join(current_mwe_words))
-            extracted_mwes.append({
-                "mwe": mwe_str_formatted,
-                "confidence": avg_score
-            })
+            extracted_mwes.append({"mwe": mwe_str_formatted, "confidence": avg_score})
 
     for idx, word_idx in enumerate(word_ids):
         if word_idx is None:
@@ -154,93 +132,74 @@ def extract_mwe(self, raw_text):
 
 ## 3. Illustrative Examples
 
-### 3.1. Installation
-The package is hosted on the Python Package Index (PyPI) and can be installed with a single command:
-```bash
-pip install uzbek-mwe-tokenizer
-```
-
-### 3.2. Cross-Script MWE Identification (Latin and Cyrillic)
-The following script (`test_examples.py`) demonstrates extracting idiomatic and compound verbal expressions from both Latin and Cyrillic Uzbek sentences:
+### 3.1. Installation and Python API
+The library is installed from PyPI via `pip install uzbek-mwe-tokenizer`. Listing 2 demonstrates MWE extraction in both Latin and Cyrillic scripts, as well as word-level BIO tagging in `slash` and `conll` formats.
 
 ```python
+# Listing 2: Python API usage across scripts and output formats
 from uzbek_mwe_tokenizer import UzbekMWETokenizer
 
-# 1. Latin Mode Execution
-tokenizer_lot = UzbekMWETokenizer(mode="lot")
-latin_text = "Natijani ko'rib, hamma o'quvchilarning birdaniga tarvuzi qo'ltig'idan tushdi."
-print("Latin Output:", tokenizer_lot.extract_mwe(latin_text))
+# 1. Latin script MWE extraction
+tokenizer_lot = UzbekMWETokenizer(mode="lot", quiet=True)
+text_lat = "Natijani ko'rib, hamma o'quvchilarning birdaniga tarvuzi qo'ltig'idan tushdi."
+print(tokenizer_lot.extract_mwe(text_lat))
+# Output: [{'mwe': "tarvuzi qo'ltig'idan tushdi", 'confidence': 100.0}]
 
-# 2. Cyrillic Mode Execution (Multiple MWEs in a single sentence)
-tokenizer_cyr = UzbekMWETokenizer(mode="cyr")
-cyrillic_text = (
-    "Қоронғи хонада унинг қаттиқ капалаги учди, "
-    "гўё ерга кирса, қулоғидан тортиб чиқарадиган ҳолат эди."
-)
-print("Cyrillic Output:", tokenizer_cyr.extract_mwe(cyrillic_text))
+# 2. Word-level BIO sequence in slash format
+print(tokenizer_lot(text_lat, output_format="slash"))
+# Output: Natijani/O ko'rib,/O hamma/O o'quvchilarning/O birdaniga/O tarvuzi/B-MWE qo'ltig'idan/I-MWE tushdi./I-MWE
+
+# 3. Cyrillic script MWE extraction (multiple MWEs in a single sentence)
+tokenizer_cyr = UzbekMWETokenizer(mode="cyr", quiet=True)
+text_cyr = "Қоронғи хонада унинг қаттиқ капалаги учди, гўё ерга кирса, қулоғидан тортиб чиқарадиган ҳолат эди."
+print(tokenizer_cyr.extract_mwe(text_cyr))
+# Output: [{'mwe': 'капалаги учди', 'confidence': 100.0},
+#          {'mwe': 'ерга кирса', 'confidence': 76.0},
+#          {'mwe': 'қулоғидан тортиб чиқарадиган', 'confidence': 99.0}]
 ```
 
-**Execution Output:**
-```text
-Latin Output: [{'mwe': "tarvuzi qo'ltig'idan tushdi", 'confidence': 100.0}]
-Cyrillic Output: [
-    {'mwe': 'капалаги учди', 'confidence': 100.0},
-    {'mwe': 'ерга кирса', 'confidence': 76.0},
-    {'mwe': 'қулоғидан тортиб чиқарадиган', 'confidence': 99.0}
-]
+### 3.2. Command-Line Interface (`uzbek-mwe`)
+Upon installation, the package registers the `uzbek-mwe` console entry point:
+
+```bash
+# Default MWE dictionary extraction (JSON output)
+uzbek-mwe "Natijani ko'rib, hamma o'quvchilarning birdaniga tarvuzi qo'ltig'idan tushdi."
+
+# Word-level BIO tagging in CoNLL format
+uzbek-mwe "Natijani ko'rib, tarvuzi qo'ltig'idan tushdi." --format conll
 ```
-
-### 3.3. Computational Performance and Resource Specifications
-Table 2 summarizes the technical specifications and runtime profile of the `uzbek-mwe-tokenizer` inference engine (`BertForTokenClassification`, 12 layers, 12 attention heads, `hidden_size=768`, `vocab_size=30,000`).
-
-*Table 2: Model architecture parameters and computational resource footprint.*
-
-| Parameter / Metric | Specification / Value |
-| :--- | :--- |
-| **Backbone Architecture** | `BertForTokenClassification` (`UzBERT-Uncased`) |
-| **Total Trainable Parameters** | $108,493,059$ (~108.5M) |
-| **Serialized Model Footprint (`safetensors`)** | ~414 MiB (FP32) |
-| **Maximum Sequence Length** | 512 subword tokens |
-| **Vocabulary Size** | 30,000 WordPiece tokens |
-| **Output Tag Space** | 3 classes (`0: O`, `1: B-MWE`, `2: I-MWE`) |
-| **Average Inference Latency (Standard CPU)** | ~85–150 ms / sentence (cached in RAM) |
-| **Average Inference Latency (CUDA GPU, T4/A100)** | ~4.2–8.5 ms / sentence |
 
 ---
 
 ## 4. Impact Overview
 
-### 4.1. Experimental Benchmark and Resolution of the "Accuracy Paradox"
-The neural model underlying `uzbek-mwe-tokenizer` was trained and evaluated on an isomorphic Latin–Cyrillic corpus of **11,936 sentences (108,200 tokens) containing 14,285 annotated MWEs** across six transformer architectures [1]:
+### 4.1. Empirical Validation and Benchmark
+The neural backbone integrated into `UzbekMWETokenizer` (`MaksudSharipov/Uzbek-MWE-Tokenizer-uzBERT`) was trained and evaluated on an isomorphic Latin–Cyrillic Uzbek MWE corpus comprising **11,936 sentences, 108,200 tokens, and 14,285 annotated MWEs** using an 80/10/10 train/validation/test split [3]. Table 1 summarizes comparative benchmark results across six Transformer architectures.
 
-*Table 3: Comparative evaluation of six transformer backbones on the Uzbek MWE test split [1].*
+*Table 1: Comparative evaluation of Transformer models on the Uzbek MWE test dataset [3].*
 
 | Model Architecture | Script | Accuracy | Precision | Recall | F1-Score |
-| :--- | :--- | :--- | :--- | :--- | :--- |
-| BERTbek-News [4] | Latin | 0.9602 | 0.8632 | 0.9011 | 0.8817 |
+| :--- | :--- | :---: | :---: | :---: | :---: |
+| BERTbek-News | Latin | 0.9602 | 0.8632 | 0.9011 | 0.8817 |
 | UzRoBERTa-v2 | Latin | 0.9582 | 0.8659 | 0.8947 | 0.8801 |
 | mBERT-Cased | Latin | 0.9531 | 0.8619 | 0.8954 | 0.8783 |
 | XLM-RoBERTa | Latin | 0.9568 | 0.8591 | 0.8919 | 0.8752 |
-| **UzBERT-Uncased (Integrated)** [5] | **Cyrillic** | **0.9559** | **0.8528** | **0.8926** | **0.8722** |
+| **UzBERT-Uncased (UzbekMWETokenizer)** | **Cyrillic** | **0.9559** | **0.8528** | **0.8926** | **0.8722** |
 | Tahrirchi-BERT | Latin | 0.9541 | 0.8597 | 0.8834 | 0.8714 |
 
-While Latin-script models (`BERTbek-News`) achieved a slightly higher aggregate F1-score due to lower false-positive rates on `O` tokens, confusion matrix analyses revealed a critical **"accuracy paradox"** [1]: Latin tokenizers fracture apostrophe-bearing words into multiple subwords, causing mid-phrase tag dropouts. By routing Latin text through the monographemic Cyrillic `UzBERT-Uncased` backbone, `uzbek-mwe-tokenizer` correctly recovered **1,342 `B-MWE` and 1,467 `I-MWE` tokens** without boundary truncation—outperforming Latin models in full-phrase structural integrity.
+Although Latin-script models (`BERTbek-News`) reached a slightly higher aggregate F1-score due to conservative `O`-class precision, token-level confusion matrix analysis revealed that Latin subword tokenizers fracture apostrophe-containing words, causing mid-expression `I-MWE` dropouts. By projecting inputs into monographemic Cyrillic during inference, `UzbekMWETokenizer` recovered **1,342 `B-MWE` and 1,467 `I-MWE` tokens** without boundary truncation.
 
-### 4.2. Impact on Downstream NLP Pipelines
-1. **Syntactic Dependency Parsing (UD):** Collapsing multi-word verbal and idiomatic spans into unified syntactic nodes prior to parsing eliminates spurious head-dependent arcs in Universal Dependencies (UD) trees for Uzbek.
-2. **Neural Machine Translation (NMT) & LLMs:** Pre-identifying non-compositional idioms prevents literal word-by-word mistranslation and improves token efficiency in Large Language Model (LLM) prompting.
-3. **Lexicography and Corpus Annotation:** Provides an automated pre-annotation tool for building large-scale phraseological dictionaries and treebanks for Turkic languages.
-
-### 4.3. Community Adoption and Real-World Usage
-Since its public deployment on May 29, 2026, `uzbek-mwe-tokenizer` has gained substantial traction within the computational linguistics community:
-- **PyPI Package Adoption:** Recorded over **1,411 cumulative downloads** (including **432 direct `pip` client installations** excluding automated mirrors) as verified via PyPI download telemetry.
-- **Hugging Face Model Hub:** Recorded **138 total model weight downloads** (`MaksudSharipov/Uzbek-MWE-Tokenizer-uzBERT`), with steady monthly active usage by NLP practitioners and academic researchers.
+### 4.2. Research and Industrial Impact
+`UzbekMWETokenizer` complements `UzbekTaggerBERT` [2] to form an end-to-end open-source preprocessing stack for Uzbek computational linguistics:
+1. **Syntactic Disambiguation:** Collapsing multi-word idioms and compound verbs into single syntactic units prior to dependency parsing eliminates spurious head-dependent attachments.
+2. **Machine Translation and Corpus Annotation:** Prevents literal word-by-word mistranslation of non-compositional Uzbek idioms and accelerates semi-automatic treebank annotation.
+3. **Verified Community Adoption:** Since its public release on PyPI and Hugging Face Hub, the package has accumulated **1,411 cumulative PyPI downloads** (432 direct client installations) and **138 Hugging Face model downloads**, confirming active reuse by researchers and developers.
 
 ---
 
-## 5. Conclusions and Future Directions
+## 5. Limitations and Future Developments
 
-`uzbek-mwe-tokenizer` bridges the gap between theoretical sequence-labeling research and practical software deployment for low-resource agglutinative languages. By combining a 108.5M-parameter UzBERT model with an automated cross-script normalization pipeline, the software completely eliminates apostrophe-induced subword fragmentation in Uzbek MWE identification. Future versions (`v0.2.0+`) will integrate Morphologically and Syntactically Informed Self-Attention (MISA) mechanisms to capture discontinuous MWEs (where external modifiers intervene between MWE components) and provide ONNX/quantized weights for ultra-low-latency edge deployment.
+Currently, `UzbekMWETokenizer` targets contiguous multi-word expressions (`B-MWE` followed by immediate `I-MWE` tokens) and relies on an intermediate transliteration step for Latin texts. Future updates (`v0.2.0+`) will incorporate Morphologically and Syntactically Informed Self-Attention (MISA) to detect discontinuous MWEs (where external modifiers intervene between MWE components) and provide quantized ONNX weights for high-throughput CPU deployment.
 
 ---
 
@@ -250,16 +209,17 @@ The author declares that he has no known competing financial interests or person
 ---
 
 ## Acknowledgements
-This research and software development were supported by the Computational Linguistics research group at Urgench State University named after Abu Rayhan Beruni and the Tashkent University of Information Technologies named after Muhammad al-Khwarizmi.
+This work was supported by the Computational Linguistics research group at Urgench State University named after Abu Rayhan Biruni and Tashkent University of Information Technologies named after Muhammad al-Khwarizmi.
 
 ---
 
 ## References
 
-1. Sharipov, M. S. (2026). Transformer-based intelligent model for identifying multi-word lexical units and reducing syntactic ambiguities in Uzbek language texts. *Bulletin of TUIT: Management and Communication Technologies*, 2(14), 103–107. https://doi.org/10.61663/262tuitmct14
-2. Bobojonova, L., et al. (2024). BBPOS: BERT-based Part-of-Speech Tagging for Uzbek. *RPTU Kaiserslautern-Landau & Saarland University*.
-3. Constant, M., Eryiğit, G., Monti, J., van der Plas, L., Ramisch, C., Rosner, M., & Todirascu, A. (2017). Multiword Expression Processing: A Survey. *Computational Linguistics*, 43(4), 837–892. https://doi.org/10.1162/COLI_a_00302
-4. Kuriyozov, E., et al. (2024). BERTbek: A Pretrained Language Model for Uzbek. *Proceedings of LREC-COLING 2024*.
-5. Mansurov, B., & Mansurov, A. (2021). UzBERT: pretraining a BERT model for Uzbek. *arXiv preprint arXiv:2104.09459*.
-6. Salaev, U., Kuriyozov, E., & Gómez-Rodríguez, C. (2022). A Machine Transliteration Tool Between Uzbek Alphabets. *CEUR Workshop Proceedings*, 3246, 42–49.
-7. Miletić, F., & Schulte im Walde, S. (2024). Semantics of Multiword Expressions in Transformer-Based Models: A Survey. *Transactions of the Association for Computational Linguistics*, 12, 108–130.
+1. Sharipov, M., Kuriyozov, E., & Vičič, J. (2026). UzbekPOS: A multi-domain dataset for Uzbek part-of-speech tagging. *Data in Brief*, 66, 112640. https://doi.org/10.1016/j.dib.2026.112640
+2. Sharipov, M. (2026). UzbekTaggerBERT: A Python library for contextual part-of-speech tagging of Uzbek. *Software Impacts*, 30, 100865. https://doi.org/10.1016/j.simpa.2026.100865
+3. Sharipov, M. S. (2026). Transformer-based intelligent model for identifying multi-word lexical units and reducing syntactic ambiguities in Uzbek language texts. *Bulletin of TUIT: Management and Communication Technologies*, 2(14), 103–107. https://doi.org/10.61663/262tuitmct14
+4. Devlin, J., Chang, M.-W., Lee, K., & Toutanova, K. (2019). BERT: Pre-training of deep bidirectional transformers for language understanding. *Proc. NAACL-HLT*, 4171–4186.
+5. Wolf, T., Debut, L., Sanh, V., et al. (2020). Transformers: State-of-the-art natural language processing. *Proc. EMNLP: System Demonstrations*, 38–45.
+6. Mansurov, B., & Mansurov, A. (2021). UzBERT: Pretraining a BERT model for Uzbek. *arXiv preprint arXiv:2104.09459*.
+7. Salaev, U., Kuriyozov, E., & Gómez-Rodríguez, C. (2022). A machine transliteration tool between Uzbek alphabets. *CEUR Workshop Proceedings*, 3246, 42–49.
+8. Hugging Face Model Hub (2026). `MaksudSharipov/Uzbek-MWE-Tokenizer-uzBERT`. https://huggingface.co/MaksudSharipov/Uzbek-MWE-Tokenizer-uzBERT

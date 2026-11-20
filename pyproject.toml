@@ -1,0 +1,68 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "uzbek-mwe-tokenizer"
+version = "0.1.0"
+description = "An open-source Python library for Transformer-based Multi-Word Expression (MWE) identification in Uzbek texts using a fine-tuned UzBERT model."
+readme = "README.md"
+requires-python = ">=3.8"
+license = { text = "MIT" }
+authors = [
+    { name = "Maksud Sharipov", email = "maqsbek72@gmail.com" }
+]
+keywords = [
+    "Uzbek",
+    "Uzbek NLP",
+    "multi-word expressions",
+    "MWE",
+    "tokenization",
+    "Transformer",
+    "BERT",
+    "UzBERT",
+    "low-resource language",
+    "agglutinative language",
+    "Python",
+    "Hugging Face",
+    "PyPI"
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Science/Research",
+    "Intended Audience :: Developers",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Text Processing :: Linguistic",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Operating System :: OS Independent"
+]
+dependencies = [
+    "torch>=1.9.0",
+    "transformers>=4.20.0",
+    "UzTransliterator>=0.0.18",
+    "sentencepiece>=0.1.96"
+]
+
+[project.scripts]
+uzbek-mwe = "uzbek_mwe_tokenizer.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/MaksudSharipov/uzbek-mwe-tokenizer"
+Repository = "https://github.com/MaksudSharipov/uzbek-mwe-tokenizer"
+PyPI = "https://pypi.org/project/uzbek-mwe-tokenizer/"
+Model = "https://huggingface.co/MaksudSharipov/Uzbek-MWE-Tokenizer-uzBERT"
+Issues = "https://github.com/MaksudSharipov/uzbek-mwe-tokenizer/issues"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["uzbek_mwe_tokenizer*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]

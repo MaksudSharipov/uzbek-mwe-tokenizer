@@ -1,0 +1,7 @@
+model,script,accuracy,precision,recall,f1_score,notes
+BERTbek-News,Latin,0.9602,0.8632,0.9011,0.8817,Latin script model (exhibits apostrophe subword fragmentation)
+UzRoBERTa-v2,Latin,0.9582,0.8659,0.8947,0.8801,Latin script model
+mBERT-Cased,Latin,0.9531,0.8619,0.8954,0.8783,Multilingual baseline
+XLM-RoBERTa,Latin,0.9568,0.8591,0.8919,0.8752,Multilingual baseline
+UzBERT-Uncased (UzbekMWETokenizer),Cyrillic,0.9559,0.8528,0.8926,0.8722,Integrated monographemic backbone (eliminates apostrophe fragmentation; 1342 B-MWE & 1467 I-MWE tokens recovered)
+Tahrirchi-BERT,Latin,0.9541,0.8597,0.8834,0.8714,Latin script baseline
