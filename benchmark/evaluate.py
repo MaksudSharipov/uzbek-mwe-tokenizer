@@ -39,8 +39,14 @@ def load_conll(path: Path) -> List[Tuple[List[str], List[str]]]:
 
 def predict_word_tags(tokenizer: UzbekMWETokenizer, words: List[str]) -> List[str]:
     text = tokenizer._prepare_text(" ".join(words))
-    prep_words = text.split()
-    inputs = tokenizer.tokenizer(prep_words, is_split_into_words=True, return_tensors="pt")
+    prep_words = tokenizer._tokenize_lexical_and_punct(text)
+    inputs = tokenizer.tokenizer(
+        prep_words,
+        is_split_into_words=True,
+        truncation=True,
+        max_length=512,
+        return_tensors="pt",
+    )
     word_ids = inputs.word_ids()
 
     with torch.no_grad():

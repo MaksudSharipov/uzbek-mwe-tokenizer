@@ -4,24 +4,20 @@ This document explains how to use **`uzbek-mwe-tokenizer`** (`UzbekMWETokenizer`
 
 ## 1. Latin Script Mode (`mode="lot"`)
 
-In Latin mode, the package normalizes apostrophes, transliterates input text to Cyrillic for neural inference, and translates extracted MWEs back to Latin script:
+In Latin mode, the package standardizes apostrophes, decouples punctuation, projects input text to Cyrillic for monographemic inference, and restores extracted MWEs back to Latin script:
 
 ```python
 from uzbek_mwe_tokenizer import UzbekMWETokenizer
 
-# Initialize tokenizer in Latin mode
-tokenizer = UzbekMWETokenizer(mode="lot")
-
-text = "Natijani ko'rib, hamma o'quvchilarning birdaniga tarvuzi qo'ltig'idan tushdi."
-mwes = tokenizer.extract_mwe(text)
-
-print(mwes)
+tokenizer_lot = UzbekMWETokenizer(mode="lot")
+text_lat = "Natijani ko'rib, hamma o'quvchilarning birdaniga tarvuzi qo'ltig'idan tushdi."
+print(tokenizer_lot.extract_mwe(text_lat))
 ```
 
-Expected output:
+Output:
 
 ```python
-[{'mwe': "tarvuzi qo'ltig'idan tushdi", 'confidence': 100.0}]
+[{'mwe': "tarvuzi qo'ltig'idan tushdi", 'confidence': 99.98}]
 ```
 
 ## 2. Cyrillic Script Mode (`mode="cyr"`)
@@ -29,32 +25,17 @@ Expected output:
 ```python
 from uzbek_mwe_tokenizer import UzbekMWETokenizer
 
-# Initialize tokenizer in Cyrillic mode
-tokenizer = UzbekMWETokenizer(mode="cyr")
-
-sentences = [
-    "Натижани кўриб, ҳамма ўқувчиларнинг бирданига тарвузи қўлтиғидан тушди.",
-    "Қоронғи хонада унинг қаттиқ капалаги учди, гўё ерга кирса, қулоғидан тортиб чиқарадиган ҳолат эди.",
-    "Рақибларимизни кўриб бизнинг асло тепа сочимиз тик бўлмади."
-]
-
-for gap in sentences:
-    print("Gap:", gap)
-    mwes = tokenizer.extract_mwe(gap)
-    print("Topilgan MWE'lar:", mwes)
-    print("-" * 50)
+tokenizer_cyr = UzbekMWETokenizer(mode="cyr")
+text_cyr = "Қоронғи хонада унинг қаттиқ капалаги учди, гўё ерга кирса, қулоғидан тортиб чиқарадиган ҳолат эди."
+print(tokenizer_cyr.extract_mwe(text_cyr))
 ```
 
-Expected output:
+Output:
 
-```text
-Gap: Натижани кўриб, ҳамма ўқувчиларнинг бирданига тарвузи қўлтиғидан тушди.
-Topilgan MWE'lar: [{'mwe': 'тарвузи қўлтиғидан тушди', 'confidence': 100.0}]
---------------------------------------------------
-Gap: Қоронғи хонада унинг қаттиқ капалаги учди, гўё ерга кирса, қулоғидан тортиб чиқарадиган ҳолат эди.
-Topilgan MWE'lar: [{'mwe': 'капалаги учди', 'confidence': 100.0}, {'mwe': 'ерга кирса', 'confidence': 76.0}, {'mwe': 'қулоғидан тортиб чиқарадиган', 'confidence': 99.0}]
---------------------------------------------------
-Gap: Рақибларимизни кўриб бизнинг асло тепа сочимиз тик бўлмади.
-Topilgan MWE'lar: [{'mwe': 'тепа сочимиз тик бўлмади', 'confidence': 100.0}]
---------------------------------------------------
+```python
+[
+    {'mwe': 'капалаги учди', 'confidence': 99.99},
+    {'mwe': 'ерга кирса', 'confidence': 76.42},
+    {'mwe': 'қулоғидан тортиб чиқарадиган', 'confidence': 98.08}
+]
 ```
