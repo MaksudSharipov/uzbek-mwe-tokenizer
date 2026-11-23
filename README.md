@@ -178,9 +178,9 @@ If you use this software or model in your research or project, please cite both 
 ## Authors
 
 - **Maksud Sharipov** (Corresponding Author — Urgench State University & Tashkent University of Information Technologies; [ORCID](https://orcid.org/0000-0002-2363-6533))
-- **Abdusobir Saidov** (Tashkent University of Information Technologies)
-- **Azizbek Ruzmetov** (Kimyo International University in Tashkent)
-- **Shukurla Bekchanov** (Mamun University)
+- **Abdusobir Saidov** (Tashkent University of Information Technologies; [ORCID](https://orcid.org/0000-0003-3596-7468))
+- **Azizbek Ruzmetov** (Kimyo International University in Tashkent; [ORCID](https://orcid.org/0000-0002-5964-1000))
+- **Shukurla Bekchanov** (Mamun University; [ORCID](https://orcid.org/0000-0001-9505-5781))
 - **Ogabek Sobirov** (Tashkent State University of Economics; [ORCID](https://orcid.org/0000-0003-1770-8550))
 - **Surayyo Sattarova** (RANCH University of Technology)
 
