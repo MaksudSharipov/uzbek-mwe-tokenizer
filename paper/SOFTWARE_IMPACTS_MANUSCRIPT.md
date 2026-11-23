@@ -140,6 +140,11 @@ The authors thank the Computational Linguistics research teams at Urgench State 
 
 ---
 
+## Declaration of generative AI and AI-assisted technologies in the manuscript preparation process
+During the preparation of this work the authors used Google Gemini in order to improve the readability and language of the manuscript. After using this tool/service, the authors reviewed and edited the content as needed and take full responsibility for the content of the published article.
+
+---
+
 ## References
 
 [1] M. Sharipov, UzbekTaggerBERT: A Python library for contextual part-of-speech tagging of Uzbek, *Software Impacts* 30 (2026) 100865. https://doi.org/10.1016/j.simpa.2026.100865.
