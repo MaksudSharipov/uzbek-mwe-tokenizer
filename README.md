@@ -9,7 +9,8 @@
 
 **`uzbek-mwe-tokenizer`** (`UzbekMWETokenizer`) is an open-source Python library for Transformer-based Multi-Word Expression (MWE) identification in Uzbek language texts. It is built on a fine-tuned **UzBERT** model (`MaksudSharipov/Uzbek-MWE-Tokenizer-uzBERT`) and extracts idiomatic expressions, auxiliary verb constructions, compound verbs, and compound nouns in context.
 
-- **Current software version:** `v0.1.0`
+- **Current software version:** `v0.1.1`
+- **Previous PyPI release:** `v0.1.0`
 - **Python compatibility:** `Python >= 3.8`
 - **PyPI package:** [uzbek-mwe-tokenizer](https://pypi.org/project/uzbek-mwe-tokenizer/)
 - **GitHub repository:** [MaksudSharipov/uzbek-mwe-tokenizer](https://github.com/MaksudSharipov/uzbek-mwe-tokenizer)
@@ -119,7 +120,7 @@ uzbek-mwe-tokenizer/
 ├── README.md
 ├── LICENSE
 ├── CITATION.cff
-├── RELEASE_NOTES_v0.1.0.md
+├── RELEASE_NOTES_v0.1.1.md
 ├── pyproject.toml
 ├── setup.py
 ├── requirements.txt
@@ -157,7 +158,7 @@ If you use this software or model in your research or project, please cite both 
   title   = {UzbekMWETokenizer: A Python library for Transformer-based multi-word expression identification in Uzbek},
   author  = {Sharipov, Maksud and Saidov, Abdusobir and Ruzmetov, Azizbek and Bekchanov, Shukurla and Sobirov, Ogabek and Sattarova, Surayyo},
   year    = {2026},
-  version = {0.1.0},
+  version = {0.1.1},
   license = {MIT},
   url     = {https://github.com/MaksudSharipov/uzbek-mwe-tokenizer}
 }

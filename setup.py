@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="uzbek-mwe-tokenizer",
-    version="0.1.0",
+    version="0.1.1",
     author="Maksud Sharipov, Abdusobir Saidov, Azizbek Ruzmetov, Shukurla Bekchanov, Ogabek Sobirov, Surayyo Sattarova",
     author_email="maqsbek72@gmail.com",
     description="A Python library for Transformer-based multi-word expression identification in Uzbek.",

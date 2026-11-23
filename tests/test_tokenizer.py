@@ -59,7 +59,7 @@ def _make_lightweight_tokenizer(mode="lot", tag_sequence=None):
 
 def test_version_and_exports():
     assert hasattr(uzbek_mwe_tokenizer, "UzbekMWETokenizer")
-    assert uzbek_mwe_tokenizer.__version__ == "0.1.0"
+    assert uzbek_mwe_tokenizer.__version__ == "0.1.1"
 
 
 def test_invalid_mode_raises():

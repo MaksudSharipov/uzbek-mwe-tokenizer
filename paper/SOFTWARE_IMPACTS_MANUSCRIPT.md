@@ -24,7 +24,7 @@ Multi-word expressions; Uzbek NLP; Tokenization; Transformer; UzBERT; Syntactic 
 
 | Nr | Code metadata description | Metadata |
 | :--- | :--- | :--- |
-| C1 | Current code version | v0.1.0 |
+| C1 | Current code version | v0.1.1 |
 | C2 | Permanent link to code/repository used for this code version | https://github.com/MaksudSharipov/uzbek-mwe-tokenizer |
 | C3 | Permanent link to reproducible capsule | Not applicable |
 | C4 | Legal code license | MIT License |
@@ -121,7 +121,7 @@ The software directly enabled our cross-script MWE disambiguation study [8], ext
 
 ## 3. Limitations and future improvements
 
-In version `v0.1.0`, `uzbek-mwe-tokenizer` extracts contiguous MWEs (`B-MWE` immediately followed by `I-MWE` tokens) and incurs a minor runtime overhead from bidirectional transliteration on Latin inputs. When external words intervene between components of separable verbal phrases (discontinuous MWEs [6]), standard BIO tagging splits the span. Future releases will incorporate span-level linking for discontinuous MWEs, batch sentence chunking beyond 512 subwords, and quantized ONNX weights for low-latency CPU deployment.
+In version `v0.1.1`, `uzbek-mwe-tokenizer` extracts contiguous MWEs (`B-MWE` immediately followed by `I-MWE` tokens) and incurs a minor runtime overhead from bidirectional transliteration on Latin inputs. When external words intervene between components of separable verbal phrases (discontinuous MWEs [6]), standard BIO tagging splits the span. Future releases will incorporate span-level linking for discontinuous MWEs, batch sentence chunking beyond 512 subwords, and quantized ONNX weights for low-latency CPU deployment.
 
 ---
 
@@ -164,7 +164,7 @@ The authors thank the Computational Linguistics research teams at Urgench State 
 
 [11] B. Mansurov, A. Mansurov, UzBERT: Pretraining a BERT model for Uzbek, *arXiv preprint arXiv:2104.09459* (2021).
 
-[12] M. Sharipov, A. Saidov, A. Ruzmetov, S. Bekchanov, O. Sobirov, S. Sattarova, `uzbek-mwe-tokenizer` v0.1.0 (GitHub, PyPI, and Hugging Face Hub: `MaksudSharipov/Uzbek-MWE-Tokenizer-uzBERT`), 2026. https://github.com/MaksudSharipov/uzbek-mwe-tokenizer.
+[12] M. Sharipov, A. Saidov, A. Ruzmetov, S. Bekchanov, O. Sobirov, S. Sattarova, `uzbek-mwe-tokenizer` v0.1.1 (GitHub, PyPI, and Hugging Face Hub: `MaksudSharipov/Uzbek-MWE-Tokenizer-uzBERT`), 2026. https://github.com/MaksudSharipov/uzbek-mwe-tokenizer.
 
 [13] U. Salaev, E. Kuriyozov, C. Gómez-Rodríguez, A machine transliteration tool between Uzbek alphabets, *CEUR Workshop Proceedings* 3246 (2022) 42–49.
 
